@@ -1,7 +1,8 @@
-package com.example.vkdemo
+package com.example.vkdemo.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.vkdemo.R
 
 class MainActivity : AppCompatActivity() {
 
