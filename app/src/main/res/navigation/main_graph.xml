@@ -3,11 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_graph"
-    app:startDestination="@id/userFragment">
+    app:startDestination="@id/loginFragment">
 
     <fragment
         android:id="@+id/userFragment"
         android:name="com.example.vkdemo.fragments.UserFragment"
         android:label="fragment_user"
         tools:layout="@layout/fragment_user" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.vkdemo.fragments.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" />
+    <fragment
+        android:id="@+id/mailFragment"
+        android:name="com.example.vkdemo.fragments.MailFragment"
+        android:label="fragment_mail"
+        tools:layout="@layout/fragment_mail" />
 </navigation>

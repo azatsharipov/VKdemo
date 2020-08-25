@@ -1,10 +1,13 @@
 package com.example.vkdemo.presenters
 
-import android.widget.ImageView
+import com.example.vkdemo.R
 import com.example.vkdemo.models.UserModel
+import com.example.vkdemo.models.VKApiRequest
 import com.example.vkdemo.views.UserView
-import com.squareup.picasso.Picasso
-import com.squareup.picasso.Target
+import com.vk.api.sdk.VK
+import com.vk.api.sdk.VKApiCallback
+import com.vk.api.sdk.exceptions.VKApiExecutionException
+import com.vk.api.sdk.requests.VKRequest
 import kotlinx.coroutines.*
 import moxy.InjectViewState
 import moxy.MvpPresenter
@@ -21,17 +24,28 @@ class UserPresenter : MvpPresenter<UserView>() {
     val PROTOCOL = "https://"
     val ADDRESS = PROTOCOL + "api.vk.com/method/"
     fun getUser(userId: String) {
-        presenterScope.launch {
-            viewState.startRequest()
+//        presenterScope.launch {
+        viewState.startRequest()
+        var user: UserModel? = null
+        VK.execute(VKApiRequest(userId),  object: VKApiCallback<UserModel> {
+            override fun success(result: UserModel) {
+                user = result
+                viewState.stopRequest()
+                viewState.showUser(user)
+            }
+            override fun fail(error: Exception) {
+                viewState.stopRequest()
+                viewState.showError(R.string.error_failed_request)
+            }
+        })
+            /*
             val ACCESS_TOKEN = "d6e587ebd6e587ebd6e587eb52d6960e6cdd6e5d6e587eb89d881b3d9cc7dbd0198c341"
             val PHOTO = "fields=photo_max"
             val METHOD = ADDRESS + "users.get?user_id=$userId&$PHOTO&v=5.52&access_token=" + ACCESS_TOKEN
             delay(1000)
-            var user: UserModel
             withContext(Dispatchers.IO) { user = getRequest(METHOD) }
-            viewState.stopRequest()
-            viewState.showUser(user)
-        }
+             */
+ //       }
     }
 
     fun getRequest(method: String): UserModel {
