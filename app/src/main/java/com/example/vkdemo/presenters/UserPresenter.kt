@@ -1,8 +1,8 @@
 package com.example.vkdemo.presenters
 
 import com.example.vkdemo.R
+import com.example.vkdemo.models.ApiUsers
 import com.example.vkdemo.models.UserModel
-import com.example.vkdemo.models.VKApiRequest
 import com.example.vkdemo.views.UserView
 import com.vk.api.sdk.VK
 import com.vk.api.sdk.VKApiCallback
@@ -26,12 +26,10 @@ class UserPresenter : MvpPresenter<UserView>() {
     fun getUser(userId: String) {
 //        presenterScope.launch {
         viewState.startRequest()
-        var user: UserModel? = null
-        VK.execute(VKApiRequest(userId),  object: VKApiCallback<UserModel> {
+        VK.execute(ApiUsers(userId),  object: VKApiCallback<UserModel> {
             override fun success(result: UserModel) {
-                user = result
                 viewState.stopRequest()
-                viewState.showUser(user)
+                viewState.showUser(result)
             }
             override fun fail(error: Exception) {
                 viewState.stopRequest()
@@ -47,7 +45,7 @@ class UserPresenter : MvpPresenter<UserView>() {
              */
  //       }
     }
-
+/*
     fun getRequest(method: String): UserModel {
         val url = URL(method.toString())
         val conn = url.openConnection() as HttpURLConnection
@@ -80,5 +78,7 @@ class UserPresenter : MvpPresenter<UserView>() {
         bufferedReader.forEachLine { stringBuilder.append(it) }
         return stringBuilder.toString()
     }
+
+ */
 
 }

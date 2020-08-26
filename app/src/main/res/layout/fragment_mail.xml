@@ -14,4 +14,11 @@
         android:layout_height="match_parent"
         android:scrollbars="vertical"/>
 
+    <ProgressBar
+        android:id="@+id/pb_mail_loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_gravity="center"/>
+
 </FrameLayout>

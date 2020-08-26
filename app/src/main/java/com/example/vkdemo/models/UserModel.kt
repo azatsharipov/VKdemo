@@ -31,6 +31,6 @@ class UserModel(var firstName: String?, var photo: String?) : Parcelable {
         fun parse(json: JSONObject)
                 = UserModel(firstName = json.optString("first_name", ""),
 //            lastName = json.optString("last_name", ""),
-            photo = json.optString("photo_max", ""))
+            photo = json.optString("photo_100", ""))
     }
 }

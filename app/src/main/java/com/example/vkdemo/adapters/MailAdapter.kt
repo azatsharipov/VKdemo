@@ -7,9 +7,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.vkdemo.R
-import com.example.vkdemo.models.DialogUserModel
+import com.example.vkdemo.models.UserModel
+import com.squareup.picasso.Picasso
 
-class MailAdapter(private val dialogs: ArrayList<DialogUserModel>) :
+class MailAdapter(private val dialogs: ArrayList<UserModel>) :
     RecyclerView.Adapter<MailAdapter.MyViewHolder>() {
     class MyViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         var tvName: TextView = view.findViewById(R.id.tv_mail_dialog_name)
@@ -28,7 +29,7 @@ class MailAdapter(private val dialogs: ArrayList<DialogUserModel>) :
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.tvName.text = dialogs[position].name
-        holder.tvMessage.text = dialogs[position].message
+        holder.tvName.text = dialogs[position].firstName
+        Picasso.get().load(dialogs[position].photo).into(holder.ivPhoto)
     }
 }
