@@ -16,9 +16,26 @@ class ApiUsers: VKRequest<UserModel> {
     }
 }
 
+class ApiMail: VKRequest<ArrayList<ChatModel>> {
+    constructor() : super("messages.getConversation") {
+//        addParam("user_id", id)
+        addParam("fields", "photo_100")
+    }
+
+    override fun parse(r: JSONObject): ArrayList<ChatModel> {
+        val chats = r.getJSONObject("response").getJSONArray("items")
+        val result = ArrayList<ChatModel>()
+        for (i in 0 until chats.length()) {
+            result.add(ChatModel.parse(chats.getJSONObject(i).getJSONObject("conversation")))
+        }
+        return result
+    }
+}
+
 class ApiFriends: VKRequest<ArrayList<UserModel>> {
     constructor(): super("friends.get") {
 //        addParam("user_id", id)
+        addParam("order", "name")
         addParam("fields", "photo_100")
     }
 

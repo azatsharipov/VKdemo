@@ -7,10 +7,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.vkdemo.R
+import com.example.vkdemo.models.ChatModel
 import com.example.vkdemo.models.UserModel
 import com.squareup.picasso.Picasso
 
-class MailAdapter(private val dialogs: ArrayList<UserModel>) :
+class MailAdapter(private val dialogs: ArrayList<ChatModel>) :
     RecyclerView.Adapter<MailAdapter.MyViewHolder>() {
     class MyViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         var tvName: TextView = view.findViewById(R.id.tv_mail_dialog_name)
@@ -21,6 +22,9 @@ class MailAdapter(private val dialogs: ArrayList<UserModel>) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_dialog, parent, false) as View
+        view.setOnClickListener({
+            // open this dialog
+        })
         return MyViewHolder(view)
     }
 

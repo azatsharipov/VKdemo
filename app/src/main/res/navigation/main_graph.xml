@@ -20,4 +20,8 @@
         android:name="com.example.vkdemo.fragments.MailFragment"
         android:label="fragment_mail"
         tools:layout="@layout/fragment_mail" />
+    <fragment
+        android:id="@+id/friendsFragment"
+        android:name="com.example.vkdemo.fragments.FriendsFragment"
+        android:label="FriendsFragment" />
 </navigation>

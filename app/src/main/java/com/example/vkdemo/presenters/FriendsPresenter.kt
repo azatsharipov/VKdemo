@@ -1,20 +1,21 @@
 package com.example.vkdemo.presenters
 
 import com.example.vkdemo.R
-import com.example.vkdemo.models.*
-import com.example.vkdemo.views.MailView
+import com.example.vkdemo.models.ApiFriends
+import com.example.vkdemo.models.UserModel
+import com.example.vkdemo.views.FriendsView
 import com.vk.api.sdk.VK
 import com.vk.api.sdk.VKApiCallback
 import moxy.InjectViewState
 import moxy.MvpPresenter
 
 @InjectViewState
-class MailPresenter : MvpPresenter<MailView>() {
+class FriendsPresenter : MvpPresenter<FriendsView>() {
 
     fun getFriends() {
         viewState.startRequest()
-        VK.execute(ApiMail(),  object: VKApiCallback<ArrayList<ChatModel>> {
-            override fun success(result: ArrayList<ChatModel>) {
+        VK.execute(ApiFriends(),  object: VKApiCallback<ArrayList<UserModel>> {
+            override fun success(result: ArrayList<UserModel>) {
                 viewState.stopRequest()
                 viewState.showFriends(result)
             }

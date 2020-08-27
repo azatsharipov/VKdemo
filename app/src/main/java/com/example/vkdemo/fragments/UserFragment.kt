@@ -21,12 +21,12 @@ import moxy.presenter.InjectPresenter
  * A simple [Fragment] subclass.
  */
 class UserFragment : MvpAppCompatFragment(), UserView {
-    lateinit var etId: EditText
-    lateinit var btShow: Button
     lateinit var tvName: TextView
     lateinit var ivPhoto: ImageView
     lateinit var pbLoading: ProgressBar
     lateinit var btToMail: Button
+    lateinit var btToFriends: Button
+    lateinit var userId: String
 
     @InjectPresenter
     lateinit var presenter: UserPresenter
@@ -36,17 +36,20 @@ class UserFragment : MvpAppCompatFragment(), UserView {
         savedInstanceState: Bundle?
     ): View? {
         val root = inflater.inflate(R.layout.fragment_user, container, false)
-        etId = root.findViewById(R.id.et_user_id)
         tvName = root.findViewById(R.id.tv_user_name)
-        btShow = root.findViewById(R.id.bt_user_show)
         ivPhoto = root.findViewById(R.id.iv_user_photo)
         pbLoading = root.findViewById(R.id.pb_user_loading)
         btToMail = root.findViewById(R.id.bt_user_to_mail)
-        btShow.setOnClickListener {
-            presenter.getUser(etId.text.toString())
-        }
+        btToFriends = root.findViewById(R.id.bt_user_to_friends)
+        // TODO getting id from bundle
+        val bundle = arguments
+        userId = bundle?.getString("ID", "1") ?: "1"
+        presenter.getUser(userId)
         btToMail.setOnClickListener {
             findNavController().navigate(R.id.mailFragment)
+        }
+        btToFriends.setOnClickListener {
+            findNavController().navigate(R.id.friendsFragment)
         }
         return root
     }
