@@ -4,8 +4,12 @@ import android.os.Parcel
 import android.os.Parcelable
 import org.json.JSONObject
 
-class ChatModel(var firstName: String?, var lastMessage: String?, var photo: String?) : Parcelable{
+class ChatModel(id: String?, firstName: String?, lastName: String?, var lastMessage: String?, photo: String?) :
+    UserModel(id, firstName, lastName, photo),
+    Parcelable {
     constructor(parcel: Parcel) : this(
+        parcel.readString(),
+        parcel.readString(),
         parcel.readString(),
         parcel.readString(),
         parcel.readString()
@@ -29,9 +33,19 @@ class ChatModel(var firstName: String?, var lastMessage: String?, var photo: Str
             return arrayOfNulls(size)
         }
 
-        fun parse(json: JSONObject)
-                = ChatModel(firstName = json.optString("first_name", ""),
+        fun parse(json: JSONObject) = ChatModel(
+            id = json.optString("id", ""),
+            firstName = json.optString("first_name", ""),
+            lastName = json.optString("last_name", ""),
             lastMessage = json.optString("last_message", ""),
             photo = json.optString("photo_100", ""))
+
+        fun parse(lastMessage: String, user: UserModel) = ChatModel(
+            id = user.id,
+            firstName = user.firstName,
+            lastName = user.lastName,
+            lastMessage = lastMessage,
+            photo = user.photo
+        )
     }
 }

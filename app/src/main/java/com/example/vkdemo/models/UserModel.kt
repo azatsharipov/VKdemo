@@ -4,7 +4,7 @@ import android.os.Parcel
 import android.os.Parcelable
 import org.json.JSONObject
 
-class UserModel(val id: String?, var firstName: String?, var lastName: String?, var photo: String?) : Parcelable {
+open class UserModel(val id: String?, var firstName: String?, var lastName: String?, var photo: String?) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString(),
         parcel.readString(),
@@ -30,8 +30,8 @@ class UserModel(val id: String?, var firstName: String?, var lastName: String?, 
             return arrayOfNulls(size)
         }
 
-        fun parse(json: JSONObject)
-                = UserModel(id = json.optString("id", ""),
+        fun parse(json: JSONObject) = UserModel(
+            id = json.optString("id", ""),
             firstName = json.optString("first_name", ""),
             lastName = json.optString("last_name", ""),
             photo = json.optString("photo_100", ""))

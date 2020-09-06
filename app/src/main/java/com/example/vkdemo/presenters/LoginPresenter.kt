@@ -13,14 +13,12 @@ import moxy.MvpPresenter
 
 @InjectViewState
 class LoginPresenter : MvpPresenter<LoginView>() {
-    fun start() {
-
-    }
 
     fun login(requestCode: Int, resultCode: Int, data: Intent?): Boolean {
         val callback = object: VKAuthCallback {
             override fun onLogin(token: VKAccessToken) {
 //                VK.addTokenExpiredHandler(tokenTracker)
+                viewState.saveUserId(token.userId.toString())
                 viewState.openMenu()
             }
 

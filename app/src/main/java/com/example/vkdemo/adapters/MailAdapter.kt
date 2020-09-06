@@ -22,9 +22,9 @@ class MailAdapter(private val dialogs: ArrayList<ChatModel>) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_dialog, parent, false) as View
-        view.setOnClickListener({
+        view.setOnClickListener {
             // open this dialog
-        })
+        }
         return MyViewHolder(view)
     }
 

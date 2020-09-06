@@ -10,6 +10,6 @@ interface LoginView : MvpView {
     fun startRequest()
     fun stopRequest()
     fun showError(resourceId: Int)
-    @Skip
     fun openMenu()
+    fun saveUserId(userId: String)
 }

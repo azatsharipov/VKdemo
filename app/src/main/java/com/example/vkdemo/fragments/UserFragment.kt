@@ -1,6 +1,7 @@
 package com.example.vkdemo.fragments
 
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -41,9 +42,12 @@ class UserFragment : MvpAppCompatFragment(), UserView {
         pbLoading = root.findViewById(R.id.pb_user_loading)
         btToMail = root.findViewById(R.id.bt_user_to_mail)
         btToFriends = root.findViewById(R.id.bt_user_to_friends)
-        // TODO getting id from bundle
+        // my profile
+        val pref = activity?.getPreferences(Context.MODE_PRIVATE)
+        // target profile
         val bundle = arguments
-        userId = bundle?.getString("ID", "1") ?: "1"
+        // open target profile else open my profile
+        userId = bundle?.getString("ID", "1") ?: pref?.getString("ID", "1").toString()
         presenter.getUser(userId)
         btToMail.setOnClickListener {
             findNavController().navigate(R.id.mailFragment)
@@ -66,7 +70,7 @@ class UserFragment : MvpAppCompatFragment(), UserView {
     }
 
     override fun showUser(user: UserModel?) {
-        tvName.text = user?.firstName
+        tvName.text = user?.firstName + ' ' + user?.lastName
         user?.photo?.let { Picasso.get().load(user.photo).into(ivPhoto) }
     }
 

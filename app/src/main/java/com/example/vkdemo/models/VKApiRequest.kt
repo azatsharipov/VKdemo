@@ -1,7 +1,9 @@
 package com.example.vkdemo.models
 
+import com.vk.api.sdk.*
 import com.vk.api.sdk.requests.VKRequest
 import org.json.JSONObject
+
 
 class ApiUsers: VKRequest<UserModel> {
     constructor(id: String): super("users.get") {
@@ -17,18 +19,28 @@ class ApiUsers: VKRequest<UserModel> {
 }
 
 class ApiMail: VKRequest<ArrayList<ChatModel>> {
-    constructor() : super("messages.getConversation") {
+    constructor() : super("messages.getConversations") {
 //        addParam("user_id", id)
-        addParam("fields", "photo_100")
+        addParam("offset", "0")
+        addParam("count", "20")
+        addParam("filter", "all")
     }
 
     override fun parse(r: JSONObject): ArrayList<ChatModel> {
         val chats = r.getJSONObject("response").getJSONArray("items")
-        val result = ArrayList<ChatModel>()
+        val resultChats = ArrayList<ChatModel>()
         for (i in 0 until chats.length()) {
-            result.add(ChatModel.parse(chats.getJSONObject(i).getJSONObject("conversation")))
+            val id = chats.getJSONObject(i).getJSONObject("conversation").getJSONObject("peer").optString("id", "")
+            val lastMessage = chats.getJSONObject(i).getJSONObject("last_message").optString("text", "")
+            VK.execute(ApiUsers(id),  object: VKApiCallback<UserModel> {
+                override fun success(result: UserModel) {
+                    resultChats.add(ChatModel.parse(lastMessage, result))
+                }
+                override fun fail(error: Exception) {
+                }
+            })
         }
-        return result
+        return resultChats
     }
 }
 

@@ -20,7 +20,7 @@ class MailPresenter : MvpPresenter<MailView>() {
             }
             override fun fail(error: Exception) {
                 viewState.stopRequest()
-                viewState.showError(R.string.error_failed_request)
+                viewState.showError(R.string.error_access_messages)
             }
         })
     }

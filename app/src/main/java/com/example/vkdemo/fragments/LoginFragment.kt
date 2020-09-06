@@ -2,6 +2,7 @@ package com.example.vkdemo.fragments
 
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -45,7 +46,6 @@ class LoginFragment : MvpAppCompatFragment(), LoginView {
         pbLoading = root.findViewById(R.id.pb_login_loading)
 
         btLogin.setOnClickListener {
-            presenter.start()
             VK.login(activity as Activity, arrayListOf(VKScope.WALL, VKScope.PHOTOS))
         }
 //        val fingerprints: Array<String?>? =
@@ -74,6 +74,14 @@ class LoginFragment : MvpAppCompatFragment(), LoginView {
     override fun openMenu() {
         Toast.makeText(activity, "ok login", Toast.LENGTH_SHORT).show()
         findNavController().navigate(R.id.userFragment)
+    }
+
+    override fun saveUserId(userId: String) {
+        val pref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
+        with (pref.edit()) {
+            putString("ID", userId)
+            commit()
+        }
     }
 
 
